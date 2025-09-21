@@ -1,8 +1,4 @@
-from django.db import models
-
-# Create your models here.
 # app_name/models.py
-from __future__ import annotations
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -16,8 +12,9 @@ class Category(models.Model):
 
     class Meta:
         ordering = ["name"]
+        verbose_name_plural = "Categories"
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
 
@@ -43,15 +40,15 @@ class TaskQuerySet(models.QuerySet):
         return self.filter(due_date__lte=dt)
 
     # Faceted filters
-    def with_priority(self, priority: int):
+    def with_priority(self, priority):
         return self.filter(priority=priority)
 
-    def with_category(self, category: "Category | int | str"):
+    def with_category(self, category):
         if isinstance(category, Category):
             return self.filter(category=category)
         if isinstance(category, int):
             return self.filter(category_id=category)
-        return self.filter(category__name__iexact=category)
+        return self.filter(category__name__iexact=str(category))
 
     def owned_by(self, user):
         return self.filter(owners=user)
@@ -121,11 +118,11 @@ class Task(models.Model):
             models.Index(fields=["due_date"]),
         ]
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.title} (#{self.pk})"
 
     @property
-    def computed_overdue(self) -> bool:
+    def computed_overdue(self):
         if self.state == self.State.DONE or not self.due_date:
             return False
         return self.due_date < timezone.now()
