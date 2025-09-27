@@ -1,36 +1,30 @@
-from django.http import JsonResponse
-from django.contrib.auth import get_user_model
+# views.py
+from django.db.models import Q
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
 from .models import Task
+from .serializers import TaskSerializer
 
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
+def task_list(request):
+    if request.method == "GET":
+        qs = Task.objects.filter(Q(created_by=request.user) | Q(owners=request.user)).distinct()
+        return Response(TaskSerializer(qs, many=True).data)
+
+    elif request.method == "POST":
+        serializer = TaskSerializer(data=request.data)
+        if serializer.is_valid():
+            task = serializer.save(created_by=request.user)
+            if task.owners.count() == 0:
+                task.owners.add(request.user)
+            return Response(TaskSerializer(task).data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
 def superuser_tasks(request):
-    """
-    Returns all tasks created by the superuser(s) in JSON format.
-    """
-    User = get_user_model()
-    superusers = User.objects.filter(is_superuser=True)
-
-    tasks = Task.objects.filter(created_by__in=superusers).values(
-        "id",
-        "title",
-        "description",
-        "priority",
-        "state",
-        "due_date",
-        "is_overdue",
-        "created_at",
-        "updated_at",
-        "category__name",
-        "created_by__username",
-    )
-
-    return JsonResponse(list(tasks), safe=False)
-
-# Create your views here.
-def task_list( request) :
-  data = {
-    "tasks": [
-      { "id": 1 , "title": "Buy Milk" , "completed": False },
-      { "id": 2 , "title": "Buy an Orange" , "completed": False }
-    ]
-  }
-  return JsonResponse(data)
+    qs = Task.objects.all()
+    return Response(TaskSerializer(qs, many=True).data)

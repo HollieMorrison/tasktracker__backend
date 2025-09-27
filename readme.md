@@ -2,7 +2,7 @@
 activating the venv 
   > located in tasktracker folder
   > making sure terminal is set to cmd
-  > from backend folder -> tasktracker/Scripts/activate.bat
+  > from backend folder ( be in cmd ) -> tasktracker\Scripts\activate.bat
 
 git 
   > my repo is inside tasktrackerAPI 
