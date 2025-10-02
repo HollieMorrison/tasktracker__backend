@@ -11,22 +11,32 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / ".env")
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g52ylv=syg*s%$sv#4mb$y!21rdu*j8j*)d7n-f4mv+@)9o=)1'
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'django-insecure-g52ylv=syg*s%$sv#4mb$y!21rdu*j8j*)d7n-f4mv+@)9o=)1'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173" , 
+    "https://tasktrackerfrontend-b0125962c8ee.herokuapp.com"
 ]
 
 # Application definition
@@ -40,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     "rest_framework",
+    "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt.token_blacklist",
 ]
