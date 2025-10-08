@@ -12,3 +12,6 @@ django app
   > creating an app
     > setting the views and url
     > connecting the apps urls to the main django url.
+
+    login : holli 
+    12345
