@@ -8,6 +8,7 @@ DEFAULT_ALLOWED = {
 }
 ALLOWED_ORIGINS = set(getattr(settings, "CORS_ALLOWED_ORIGINS", [])) or DEFAULT_ALLOWED
 
+
 class AllowAllCORSMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
