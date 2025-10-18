@@ -14,10 +14,15 @@ django app
     > connecting the apps urls to the main django url.
 
 
-#postman tests
+# postman tests 
+https://.postman.co/workspace/My-Workspace~4757bf4a-2b3d-455d-8a45-89cb1c49b210/collection/40152220-160a1fde-7a09-4626-abba-3b24855d8060?action=share&creator=40152220
 
 
-#testing
+
+
+# testing
+
+pytest to run 
 
 | Category                 | Test Name                                 | What it Checks                                                                                                                                                                         |
 | ------------------------ | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
