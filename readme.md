@@ -136,3 +136,92 @@ Typical tests include:
 Run tests using:
 ```bash
 python manage.py test
+
+Manual Testing
+
+Manual testing included:
+
+Verifying endpoints in Postman using real-world scenarios.
+
+Checking authenticated and unauthenticated access behaviour.
+
+Confirming error handling for invalid input.
+
+Frontend integration testing with live API responses.
+
+Deployment and Local Setup
+Environment Configuration
+
+Clone the repository:
+
+git clone https://github.com/HollieMorrison/tasktracker__backend.git
+
+
+Move into the project folder:
+
+cd tasktracker__backend
+
+
+Create and activate a virtual environment:
+
+python -m venv venv
+source venv/bin/activate      # macOS/Linux  
+venv\Scripts\activate         # Windows
+
+
+Install project dependencies:
+
+pip install -r requirements.txt
+
+
+Add a .env file with:
+
+DJANGO_SECRET_KEY=your_secret_key
+DJANGO_DEBUG=True
+DATABASE_URL=sqlite:///db.sqlite3
+
+Running Locally
+
+Run database migrations:
+
+python manage.py migrate
+
+
+Start the development server:
+
+python manage.py runserver
+
+
+Visit http://127.0.0.1:8000/
+ to explore endpoints.
+
+Deployment Steps
+
+This backend can be deployed to services like Render, Railway, or Heroku:
+
+Configure environment variables securely on the platform.
+
+Use dj-database-url for production database connections.
+
+Set DEBUG=False and define ALLOWED_HOSTS for production security.
+
+Credits
+Code References
+
+Django and DRF official documentation for structure and testing guidance.
+
+SimpleJWT docs for token-based authentication setup.
+
+Environment setup patterns inspired by modern Django deployment practices.
+
+Content
+
+API documentation and descriptions written by the project developer, Hollie Morrison.
+
+Acknowledgements
+
+Mentors and reviewers who offered feedback on project structure and readability.
+
+Django and open-source community forums for continuous learning resources.
+
+Developer peers who tested endpoints and suggested improvements.
